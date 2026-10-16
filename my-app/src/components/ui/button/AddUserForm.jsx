@@ -2,13 +2,19 @@
 import { useState } from "react";
 
 const empty = {
-  firstName: "",
+  name: "",
   email: "",
+  city: "",
+  phone: "",
+  website: "",
+  company: "",
+  catchPhrase: "",
+  lat: "",
+  lng: "",
 };
 
 function AddUserForm({ onAdd }) {
   const [form, setForm] = useState(empty);
-  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,54 +28,59 @@ function AddUserForm({ onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const found = {};
-
-    if (!form.firstName.trim()) {
-      found.firstName = "Required";
-    }
-
-    if (!form.email.includes("@")) {
-      found.email = "Invalid email";
-    }
-
-    setErrors(found);
-
-    if (Object.keys(found).length > 0) return;
-
     const newUser = {
       id: Date.now(),
-      name: form.firstName,
+      name: form.name,
       email: form.email,
+      address: {
+        city: form.city,
+        geo: {
+          lat: form.lat,
+          lng: form.lng,
+        },
+      },
+      phone: form.phone,
+      website: form.website,
+      company: {
+        name: form.company,
+        catchPhrase: form.catchPhrase,
+      },
     };
 
     onAdd(newUser);
     setForm(empty);
-    setErrors({});
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h3>Add New User</h3>
 
-      <input
-        name="firstName"
-        placeholder="Enter name"
-        value={form.firstName}
-        onChange={handleChange}
-      />
-      {errors.firstName && <small>{errors.firstName}</small>}
+      <input name="name" placeholder="Name" value={form.name}
+        onChange={handleChange} required /><br /><br />
 
-      <br /><br />
+      <input name="email" type="email" placeholder="Email"
+        value={form.email} onChange={handleChange} required /><br /><br />
 
-      <input
-        name="email"
-        placeholder="Enter email"
-        value={form.email}
-        onChange={handleChange}
-      />
-      {errors.email && <small>{errors.email}</small>}
+      <input name="city" placeholder="City" value={form.city}
+        onChange={handleChange} required /><br /><br />
 
-      <br /><br />
+      <input name="phone" placeholder="Phone" value={form.phone}
+        onChange={handleChange} required /><br /><br />
+
+      <input name="website" placeholder="Website" value={form.website}
+        onChange={handleChange} required /><br /><br />
+
+      <input name="company" placeholder="Company Name"
+        value={form.company} onChange={handleChange} required /><br /><br />
+
+      <input name="catchPhrase" placeholder="Company Catchphrase"
+        value={form.catchPhrase} onChange={handleChange} required /><br /><br />
+
+      <input name="lat" placeholder="Latitude" value={form.lat}
+        onChange={handleChange} required /><br /><br />
+
+      <input name="lng" placeholder="Longitude" value={form.lng}
+        onChange={handleChange} required /><br /><br />
 
       <button type="submit">Add User</button>
     </form>

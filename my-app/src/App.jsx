@@ -281,8 +281,7 @@ function App() {
 
     fetchData();
   }, []);
-
-  const handleAdd = (newUser) => {
+const handleAdd = (newUser) => {
   const updatedUsers = [...users];
   updatedUsers.push(newUser);
   setUsers(updatedUsers);
@@ -313,6 +312,9 @@ function App() {
           <p><strong>Phone no:</strong> {user.phone || "Not provided"}</p>
           <p><strong>Website:</strong> {user.website || "Not provided"}</p>
           <p><strong>Company:</strong> {user.company?.name || "Not provided"}</p>
+          <p><strong>Company Catch phrase:</strong> {user.company.catchPhrase}</p>
+          <p><strong>Co-ordinates:</strong>{user.address.geo.lat}    {user.address.geo.lng}</p>
+          
         </div>
       ))}
     </div>
